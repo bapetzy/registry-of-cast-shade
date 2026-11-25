@@ -1,0 +1,350 @@
+.registry {
+  padding: var(--section) var(--gutter);
+  background: var(--daylight);
+}
+
+.registry__head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--s-5);
+  margin-bottom: var(--s-7);
+}
+
+.registry__head .section-title {
+  grid-column: 1 / -1;
+}
+
+.registry__intro {
+  grid-column: 7 / span 5;
+  margin-top: var(--s-4);
+}
+
+/* ---- Filters ----------------------------------------------------------- */
+
+.registry__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+}
+
+.registry__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 2.5rem;
+  padding: 0 var(--s-4);
+  border: 2px solid var(--ink);
+  background: transparent;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: background-color 140ms;
+}
+
+.registry__filter:hover {
+  background: rgb(248 247 241 / 0.6);
+}
+
+.registry__filter[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+.registry__count {
+  font-weight: 500;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Masonry ----------------------------------------------------------- */
+
+.registry__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  align-items: start;
+}
+
+.registry__col {
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+}
+
+.specimen {
+  --z: 4;
+  position: relative;
+  background: var(--chalk);
+  transition: box-shadow 220ms var(--ease-out);
+}
+
+.specimen:hover,
+.specimen:focus-within {
+  --z: 14;
+}
+
+/* Index-card header: the number it is filed under, and the drawer it lives in. */
+.specimen__strip {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-4);
+  border-bottom: 1.5px solid var(--ink);
+  color: var(--shade);
+}
+
+.specimen__category {
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+.specimen__text {
+  padding: var(--s-3) var(--s-4) var(--s-6);
+}
+
+/* The rod hole punched through every card in the drawer. */
+.specimen::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-3);
+  width: 0.85rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--daylight);
+  box-shadow: inset 1px 1.5px 0 rgb(18 23 58 / 0.35);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.specimen__cast {
+  margin-top: var(--s-2);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.specimen__no {
+  color: var(--shade);
+}
+
+.specimen__title {
+  margin-top: var(--s-1);
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.specimen__open {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  text-transform: inherit;
+}
+
+/* The whole card is the button's hit area. */
+.specimen__open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.specimen__open:focus-visible {
+  outline: none;
+}
+
+.specimen:has(.specimen__open:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.specimen__where {
+  margin-top: var(--s-1);
+  font-size: var(--t-small);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.specimen__note {
+  margin-top: var(--s-3);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* ---- Specimen drawings ------------------------------------------------- */
+
+.specimen-art {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.specimen-art__body {
+  color: var(--ink);
+}
+
+.specimen-art__cast {
+  color: var(--shade);
+  opacity: calc(var(--sun-strength) * 0.6);
+  transform-box: view-box;
+  transform-origin: 0 0;
+  /* Shear the drawing onto the ground plane, away from the sun. */
+  transform: matrix(1, 0, calc(-1 * var(--sun-x)), calc(-1 * var(--sun-y)), 0, 0);
+}
+
+.specimen-art__cast .detail {
+  display: none;
+}
+
+.specimen-art__ground {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+/* ---- Dialog ------------------------------------------------------------ */
+
+.specimen-dialog {
+  width: min(64rem, calc(100vw - 2rem));
+  max-height: calc(100svh - 2rem);
+  padding: 0;
+  border: 0;
+  background: var(--chalk);
+  color: var(--ink);
+  box-shadow: calc(var(--wall-x) * 24px) calc(var(--wall-y) * 24px) 12px rgb(18 23 58 / 0.35);
+}
+
+.specimen-dialog::backdrop {
+  background: rgb(43 59 192 / 0.55);
+}
+
+.specimen-dialog__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+}
+
+.specimen-dialog__art {
+  display: grid;
+  align-items: end;
+  padding: var(--s-6) var(--s-5) 0;
+  background: var(--daylight);
+}
+
+.specimen-dialog__art .specimen-art {
+  max-height: 70svh;
+}
+
+.specimen-dialog__text {
+  display: grid;
+  align-content: start;
+  gap: var(--s-2);
+  padding: var(--s-6);
+}
+
+.specimen-dialog__title {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
+  font-weight: 800;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.specimen-dialog__detail {
+  margin-top: var(--s-3);
+  max-width: 44ch;
+}
+
+.specimen-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+
+.specimen-dialog__unavailable {
+  max-width: 30ch;
+  padding-left: var(--s-3);
+  border-left: 3px solid var(--shade);
+  font-style: italic;
+}
+
+.specimen-dialog__close {
+  padding: var(--s-2) 0;
+  border: 0;
+  background: none;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.cast-hours {
+  margin-top: var(--s-4);
+}
+
+.cast-hours__strip {
+  position: relative;
+  height: 0.9rem;
+  margin-top: var(--s-2);
+  border: 2px solid var(--ink);
+  background: var(--sulfur);
+}
+
+.cast-hours__span {
+  position: absolute;
+  inset-block: 0;
+  background: var(--shade);
+}
+
+.cast-hours__ticks {
+  position: relative;
+  height: 1.4rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.cast-hours__ticks span {
+  position: absolute;
+  top: 0.2rem;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 900px) {
+  .registry__intro {
+    grid-column: 1 / -1;
+  }
+  .specimen-dialog__body {
+    grid-template-columns: 1fr;
+  }
+  .specimen-dialog__art {
+    padding-top: var(--s-5);
+  }
+  .specimen-dialog__art .specimen-art {
+    max-height: 38svh;
+  }
+  .specimen-dialog__text {
+    padding: var(--s-5);
+  }
+}
+
+@media (max-width: 560px) {
+  .specimen__note,
+  .specimen__category {
+    display: none;
+  }
+  .specimen__text {
+    padding: var(--s-2) var(--s-3) var(--s-3);
+  }
+  .registry__filter {
+    min-height: 2.25rem;
+    padding: 0 var(--s-3);
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,173 @@
+.nav {
+  position: fixed;
+  inset: var(--s-4) var(--gutter) auto;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.nav > * {
+  pointer-events: auto;
+}
+
+.nav__mark,
+.nav__plate {
+  --z: 5;
+  background: var(--chalk);
+  color: var(--ink);
+}
+
+.nav__mark {
+  display: block;
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.5;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav__mark-short {
+  display: none;
+}
+
+.nav__plate {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-2) var(--s-2) var(--s-2) var(--s-5);
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--s-5);
+}
+
+.nav__links a {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav__links a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.nav__clock {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 2.25rem;
+  padding: 0 var(--s-3);
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+.nav__clock .tag {
+  min-width: 3ch;
+  font-size: 1.15rem;
+}
+
+.sun-glyph path {
+  stroke: rgb(248 247 241 / 0.5);
+  stroke-width: 1.2;
+}
+
+.sun-glyph circle.is-up {
+  fill: var(--sulfur);
+}
+
+.sun-glyph circle.is-down {
+  fill: var(--sodium);
+}
+
+.nav__menu {
+  display: none;
+  min-height: 2.25rem;
+  padding: 0 var(--s-3);
+  border: 2px solid var(--ink);
+  background: transparent;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.nav__sheet {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  align-content: center;
+  padding: var(--gutter);
+  background: var(--ink);
+  color: var(--chalk);
+  --focus: var(--sodium);
+}
+
+.nav__sheet[hidden] {
+  display: none;
+}
+
+.nav__sheet nav {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.nav__sheet a {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 18vw, 6rem);
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .nav__links {
+    display: none;
+  }
+  .nav__menu {
+    display: block;
+  }
+  .nav__plate {
+    gap: var(--s-2);
+    padding-left: var(--s-2);
+  }
+}
+
+@media (max-width: 560px) {
+  .nav__mark-full {
+    display: none;
+  }
+  .nav__mark-short {
+    display: block;
+  }
+  .nav {
+    inset-block-start: var(--s-3);
+  }
+  .nav__mark {
+    padding: var(--s-1) var(--s-3);
+    font-size: 1rem;
+    line-height: 1.05;
+  }
+  .nav__plate {
+    gap: var(--s-1);
+    padding: var(--s-1);
+  }
+  .nav__clock {
+    min-height: 2.25rem;
+    padding: 0 var(--s-2);
+  }
+  .nav__clock .tag {
+    font-size: 1.05rem;
+  }
+  .nav__menu {
+    padding: 0 var(--s-3);
+    font-size: 1rem;
+  }
+}

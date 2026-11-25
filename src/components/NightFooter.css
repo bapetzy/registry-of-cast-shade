@@ -1,0 +1,172 @@
+.night {
+  --lamp-x: 70%;
+  --lamp-y: 40%;
+  --focus: var(--sodium);
+  position: relative;
+  isolation: isolate;
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+/* ---- Sunset: last of the daylight, the sun, the city in elevation ------ */
+
+.night__sky {
+  position: relative;
+  height: clamp(9rem, 18vw, 15rem);
+  overflow: hidden;
+  background: var(--daylight);
+}
+
+/*
+ * The page's sun. --sun-alt is its real altitude in degrees; at 0 the disc is
+ * half behind the skyline, and it is gone a couple of degrees later.
+ */
+.night__sun {
+  position: absolute;
+  left: 68%;
+  /* Centre follows the altitude but never leaves the sky band. */
+  bottom: min(calc(max(3.5rem, 6vw) * 0.55 + var(--sun-alt, 0) * 1.6rem), calc(100% - clamp(4rem, 8vw, 7rem) * 0.6));
+  width: clamp(4rem, 8vw, 7rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff4c7;
+  transform: translate(-50%, 50%);
+}
+
+.night__skyline {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  height: auto;
+  /* True plan width, heights exaggerated 1.6×: a 52° north roofscape, not a downtown. */
+  aspect-ratio: 1600 / 128;
+  min-height: 3.5rem;
+}
+
+.night__skyline path {
+  fill: var(--ink);
+}
+
+.night__window {
+  fill: var(--sodium);
+  opacity: calc(1 - var(--sun-strength, 1));
+}
+
+/* ---- Night --------------------------------------------------------------- */
+
+.night__body {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: 82svh;
+  padding: var(--s-8) var(--gutter) var(--s-7);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.night__field {
+  position: absolute;
+  inset: 0 -1rem -1rem;
+  z-index: -1;
+}
+
+.night__numbers {
+  position: absolute;
+  inset: 0;
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 1rem + 1.4vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  word-spacing: 0.4em;
+  text-align: justify;
+  color: rgb(248 247 241 / 0.05);
+  user-select: none;
+}
+
+.night__numbers--lit {
+  color: var(--sodium);
+  -webkit-mask-image: radial-gradient(circle 15rem at var(--lamp-x) var(--lamp-y), #000 0%, rgb(0 0 0 / 0.5) 45%, transparent 100%);
+  mask-image: radial-gradient(circle 15rem at var(--lamp-x) var(--lamp-y), #000 0%, rgb(0 0 0 / 0.5) 45%, transparent 100%);
+}
+
+.night__content {
+  position: relative;
+  display: grid;
+  gap: var(--s-5);
+  max-width: 60rem;
+}
+
+/* A feathered pool of dark under the copy so lit numbers never sit behind words. */
+.night__content::before {
+  content: '';
+  position: absolute;
+  inset: -4rem -6rem -3rem -8rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--ink) 62%, rgb(18 23 58 / 0));
+  pointer-events: none;
+}
+
+.night__title {
+  font-size: clamp(3.5rem, 2rem + 7vw, 9rem);
+  line-height: 0.84;
+}
+
+.night__lede {
+  max-width: 44ch;
+  font-size: var(--t-lede);
+  line-height: 1.45;
+}
+
+.night__hint-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .night__hint-pointer {
+    display: none;
+  }
+  .night__hint-touch {
+    display: inline;
+  }
+  .night__numbers--lit {
+    -webkit-mask-image: radial-gradient(circle 11rem at var(--lamp-x) var(--lamp-y), #000 0%, transparent 100%);
+    mask-image: radial-gradient(circle 11rem at var(--lamp-x) var(--lamp-y), #000 0%, transparent 100%);
+  }
+}
+
+.night__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-4);
+}
+
+.night__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.night__nav a:hover {
+  color: var(--sodium);
+}
+
+.night__colophon {
+  max-width: 60ch;
+  margin-top: var(--s-6);
+  padding-top: var(--s-4);
+  border-top: 1px solid rgb(248 247 241 / 0.25);
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: rgb(248 247 241 / 0.75);
+}
+
+@media (max-width: 760px) {
+  .night__content::before {
+    inset: -3rem -2rem -2rem -3rem;
+  }
+}

@@ -1,0 +1,179 @@
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100svh;
+  padding: clamp(6.5rem, 14vh, 9rem) var(--gutter) var(--s-7);
+  overflow: hidden;
+  isolation: isolate;
+  touch-action: pan-y;
+  /* Limewash: a whisper of plaster grain so the wall reads as a surface. */
+  background-color: var(--daylight);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .07 0 0 0 0 .09 0 0 0 0 .23 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero__glow {
+  --light-x: 20%;
+  --light-y: 10%;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 38vmax at var(--light-x) var(--light-y),
+    rgb(255 252 232 / 0.85),
+    rgb(255 250 220 / 0.25) 45%,
+    transparent 70%
+  );
+}
+
+.hero__title {
+  display: grid;
+  align-self: center;
+  font-size: clamp(4.6rem, 12.6vw, 15rem);
+  font-weight: 900;
+  line-height: 0.82;
+  color: var(--ink);
+}
+
+.hero__layer {
+  grid-area: 1 / 1;
+}
+
+/* Translated cast letters paint as positioned boxes; keep the ink face above them. */
+.hero__layer--relief {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__line {
+  display: block;
+}
+
+.hero__word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 0.18em;
+}
+
+.hero__letter {
+  display: inline-block;
+}
+
+.hero__layer--cast .hero__letter {
+  --lx: 10px;
+  --ly: 10px;
+  /*
+   * A hard, sun-cut shadow in the one shade colour used across the page.
+   * Moved with translate rather than text-shadow: a transform never forces
+   * layout, so the lamp can move every frame cheaply.
+   */
+  color: var(--cast);
+  translate: var(--lx) var(--ly);
+}
+
+.hero__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 46ch) 1fr;
+  align-items: end;
+  gap: var(--s-5) var(--s-7);
+  margin-top: var(--s-7);
+}
+
+/* The actions sit on the lede's left edge, the hint on the far right. */
+.hero__lede {
+  max-width: 44ch;
+}
+
+.hero__actions {
+  grid-column: 1;
+}
+
+.hero__hint {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+}
+
+.hero__hint {
+  justify-self: end;
+  max-width: 18ch;
+  font-style: italic;
+  font-size: var(--t-small);
+  line-height: 1.4;
+  text-align: right;
+  color: var(--ink-soft);
+}
+
+.hero__hint-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .hero__hint-pointer {
+    display: none;
+  }
+  .hero__hint-touch {
+    display: inline;
+  }
+}
+
+.hero__plaque {
+  --z: 7;
+  position: absolute;
+  top: clamp(6.5rem, 14vh, 9rem);
+  right: var(--gutter);
+  display: grid;
+  gap: var(--s-1);
+  max-width: 17rem;
+  padding: var(--s-3) var(--s-4);
+  background: var(--chalk);
+  font-size: var(--t-small);
+  line-height: 1.4;
+}
+
+@media (max-width: 1100px) {
+  .hero__foot {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero__hint {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    max-width: none;
+    text-align: left;
+  }
+  .hero__plaque {
+    position: static;
+    justify-self: start;
+    margin-top: var(--s-6);
+    max-width: 24rem;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: 6rem;
+  }
+  .hero__title {
+    font-size: clamp(3.3rem, 16.8vw, 9rem);
+    line-height: 0.86;
+  }
+  .hero__word {
+    margin-right: 0.14em;
+  }
+  .hero__foot {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+  .hero__plaque {
+    max-width: none;
+    justify-self: stretch;
+  }
+}

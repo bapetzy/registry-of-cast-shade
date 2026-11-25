@@ -1,0 +1,73 @@
+.bylaws {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s-7) var(--s-8);
+  padding: var(--section) var(--gutter);
+  background: var(--daylight);
+}
+
+.bylaws__head {
+  align-self: start;
+  position: sticky;
+  top: 7rem;
+}
+
+.bylaws__note {
+  max-width: 26ch;
+  margin-top: var(--s-5);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.bylaws__list {
+  display: grid;
+}
+
+.bylaw {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--s-5);
+  padding: var(--s-5) 0 var(--s-6);
+  border-top: 2px solid var(--ink);
+}
+
+/* Numerals are mounted on the wall, so they take the page's sun like the headline. */
+.bylaw__number {
+  font-family: var(--display);
+  font-size: 6.5rem;
+  font-weight: 900;
+  line-height: 0.8;
+  font-variant-numeric: tabular-nums;
+  text-shadow: calc(var(--wall-x) * 10px) calc(var(--wall-y) * 10px) 0 var(--cast);
+}
+
+.bylaw__title {
+  font-family: var(--display);
+  font-size: var(--t-h3);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.bylaw__text {
+  max-width: 44ch;
+  margin-top: var(--s-3);
+  font-size: var(--t-lede);
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .bylaws {
+    grid-template-columns: 1fr;
+  }
+  .bylaws__head {
+    position: static;
+  }
+  .bylaw {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: var(--s-4);
+  }
+  .bylaw__number {
+    font-size: 3.8rem;
+  }
+}

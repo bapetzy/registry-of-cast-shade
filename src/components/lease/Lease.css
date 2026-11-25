@@ -1,0 +1,438 @@
+/* The lease desk sits in the shade: the only section painted ultramarine. */
+.lease {
+  --focus: var(--sulfur);
+  --cast: rgb(10 16 70 / calc(var(--sun-strength) * 0.55));
+  --title-cast: var(--ink);
+  padding: var(--section) var(--gutter);
+  background: var(--shade);
+  color: var(--chalk);
+}
+
+.lease__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--s-5) var(--s-8);
+  margin-bottom: var(--s-8);
+}
+
+.lease__desk {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--s-8);
+  align-items: start;
+}
+
+/* ---- Form -------------------------------------------------------------- */
+
+.lease__form {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.field {
+  display: grid;
+  gap: var(--s-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field__label {
+  padding: 0;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.field__sub {
+  display: block;
+  margin-bottom: var(--s-1);
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.field__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  max-width: 26rem;
+}
+
+.lease select,
+.lease input[type='text'] {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 var(--s-3);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+}
+
+.lease select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.15rem) 50%,
+    calc(100% - 0.8rem) 50%;
+  background-size: 0.36rem 0.36rem;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+}
+
+.lease [aria-invalid='true'] {
+  border-color: var(--sodium);
+  box-shadow: 0 0 0 2px var(--sodium);
+}
+
+.field__error {
+  max-width: 48ch;
+  padding: var(--s-2) var(--s-3);
+  background: var(--ink);
+  color: var(--chalk);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.chip {
+  position: relative;
+}
+
+.chip input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.chip span {
+  display: flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 var(--s-4);
+  border: 2px solid rgb(248 247 241 / 0.7);
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 120ms;
+}
+
+.chip input:hover + span {
+  background: rgb(248 247 241 / 0.12);
+}
+
+.chip input:checked + span {
+  border-color: var(--chalk);
+  background: var(--chalk);
+  color: var(--ink);
+}
+
+.chip input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.lease__submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.lease .button--solid {
+  background: var(--sulfur);
+  border-color: var(--sulfur);
+  color: var(--ink);
+}
+
+.lease__status {
+  font-style: italic;
+}
+
+/* ---- The paper ---------------------------------------------------------- */
+
+.lease__preview {
+  position: sticky;
+  top: 6rem;
+}
+
+.docket-paper {
+  --z: 18;
+  position: relative;
+  padding: var(--s-5) var(--s-5) var(--s-6);
+  background: var(--chalk);
+  color: var(--ink);
+  box-shadow: calc(var(--wall-x) * 18px) calc(var(--wall-y) * 18px) 8px var(--cast);
+  transform: rotate(1.2deg);
+}
+
+/* The stamp lands: the paper takes the blow, a few pixels, once. */
+.docket-paper[data-filed] {
+  animation: docket-thud 260ms 110ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes docket-thud {
+  0% {
+    translate: 0 0;
+  }
+  35% {
+    translate: 0 4px;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+.docket-paper__head {
+  display: flex;
+  gap: var(--s-4);
+  justify-content: space-between;
+  padding-bottom: var(--s-2);
+  border-bottom: 2px solid var(--ink);
+}
+
+.docket-paper__form {
+  margin-left: auto;
+  color: var(--ink-soft);
+}
+
+.docket-paper__number {
+  color: var(--shade);
+}
+
+.docket-paper__art {
+  display: grid;
+  place-items: center;
+  height: 9.5rem;
+  margin: var(--s-3) 0;
+  background: var(--daylight);
+  overflow: hidden;
+}
+
+.docket-paper__art .specimen-art {
+  width: auto;
+  height: 100%;
+}
+
+.docket-paper__building {
+  color: var(--ink-soft);
+}
+
+.docket-paper__title {
+  font-family: var(--display);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Typed into ruled boxes, the way a counter form is filled in. */
+.docket-paper__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: var(--s-3);
+  border-top: 1.5px solid var(--ink);
+}
+
+.docket-paper__fields > div {
+  padding: var(--s-2) var(--s-3) var(--s-2) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.docket-paper__fields > div:first-child {
+  grid-column: 1 / -1;
+}
+
+.docket-paper__fields dt {
+  font-family: var(--display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.docket-paper__fields dd {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.docket-paper__small {
+  margin-top: var(--s-3);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.docket-paper__sign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  margin-top: var(--s-5);
+  max-width: 30rem;
+}
+
+.docket-paper__sign > div {
+  display: grid;
+}
+
+.docket-paper__signature {
+  min-height: 2.2rem;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-style: italic;
+  line-height: 1.3;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.docket-paper__line {
+  margin-top: var(--s-1);
+  font-family: var(--display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.stamp {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 9.5rem;
+  color: var(--shade);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.stamp__ring {
+  fill: currentColor;
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stamp__date {
+  fill: currentColor;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.stamp__word {
+  fill: currentColor;
+  font-family: var(--display);
+  font-size: 44px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* ---- File of leases ---------------------------------------------------- */
+
+.lease__file {
+  margin-top: var(--s-9);
+  padding-top: var(--s-5);
+  border-top: 2px solid rgb(248 247 241 / 0.6);
+}
+
+.lease__file-title:focus {
+  outline: none;
+}
+
+.lease__file-title:focus-visible {
+  outline: 3px solid var(--focus);
+}
+
+.lease__file-title {
+  font-family: var(--display);
+  font-size: var(--t-h3);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.lease__empty {
+  margin-top: var(--s-3);
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.lease__list {
+  margin-top: var(--s-3);
+}
+
+.lease__list li {
+  overflow: hidden;
+}
+
+.lease__row {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 2fr) minmax(0, 1.3fr) auto;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid rgb(248 247 241 / 0.3);
+  font-size: 1rem;
+}
+
+.lease__withdraw {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 1000px) {
+  .lease__head,
+  .lease__desk {
+    grid-template-columns: 1fr;
+  }
+  .lease__preview {
+    position: static;
+  }
+  .docket-paper {
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .docket-paper {
+    padding: var(--s-4);
+  }
+  .docket-paper__signature {
+    font-size: 1.25rem;
+  }
+  .stamp {
+    right: 0.5rem;
+    bottom: 3.5rem;
+    width: 7rem;
+  }
+  .lease__row {
+    grid-template-columns: 1fr auto;
+  }
+  .lease__row > span:nth-child(2),
+  .lease__row > span:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+  .lease__withdraw {
+    grid-row: 1;
+    grid-column: 2;
+  }
+}

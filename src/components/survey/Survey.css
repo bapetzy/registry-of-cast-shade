@@ -1,0 +1,444 @@
+.survey {
+  padding-top: var(--section);
+  background: var(--daylight);
+}
+
+.survey__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--s-6) var(--s-8);
+  padding: 0 var(--gutter) var(--s-8);
+}
+
+.survey__intro {
+  display: grid;
+  gap: var(--s-4);
+  color: var(--ink-soft);
+}
+
+.survey__intro .lede {
+  color: var(--ink);
+}
+
+/* The instrument: a full-bleed plan with controls mounted on it like plaques. */
+.survey__instrument {
+  position: relative;
+  border-block: 2px solid var(--ink);
+}
+
+.survey-map {
+  position: relative;
+  height: clamp(36rem, 88vh, 60rem);
+  overflow: hidden;
+  cursor: crosshair;
+  background: #f4e5a4;
+}
+
+.survey-map[data-pointer='select'] {
+  cursor: pointer;
+}
+
+.survey-map canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.survey-map__tip {
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  max-width: 22rem;
+  padding: var(--s-1) var(--s-3);
+  background: var(--ink);
+  color: var(--chalk);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.survey__controls,
+.docket,
+.survey__legend {
+  --z: 10;
+  position: absolute;
+  background: var(--chalk);
+}
+
+.survey__controls {
+  left: var(--gutter);
+  bottom: var(--s-6);
+  width: min(33rem, 46%);
+  padding: var(--s-3) var(--s-4) var(--s-4);
+}
+
+.survey__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+
+.survey__play {
+  min-height: 2.5rem;
+  padding: 0 var(--s-4);
+  font-size: 1.05rem;
+}
+
+/* ---- Sun dial ---------------------------------------------------------- */
+
+.sundial__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-4);
+  font-size: 1.05rem;
+}
+
+.sundial__time {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.sundial__plot {
+  position: relative;
+}
+
+.sundial__plot svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.sundial__plot:has(.sundial__input:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.sundial__input {
+  position: absolute;
+  inset-block: 0;
+  left: calc(4% - 11px);
+  width: calc(92% + 22px);
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  appearance: none;
+  -webkit-appearance: none;
+  /* Horizontal drags move the sun; vertical swipes still scroll the page. */
+  touch-action: pan-y;
+}
+
+.sundial__input:disabled {
+  cursor: default;
+}
+
+.sundial__input::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sundial__input::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+}
+
+.sundial__horizon {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.sundial__tick {
+  stroke: var(--ink);
+}
+
+.sundial__hour {
+  fill: var(--ink);
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.sundial__path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+}
+
+.sundial__night {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 5;
+  opacity: 0.5;
+}
+
+.sundial__span {
+  fill: var(--shade);
+  opacity: 0.35;
+}
+
+.sundial__grip {
+  fill: var(--ink);
+}
+
+.sundial__stick {
+  stroke: var(--shade);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.sundial__sun {
+  fill: var(--sulfur);
+  stroke: var(--ink);
+  stroke-width: 2.5;
+}
+
+.sundial__sun.is-down {
+  fill: var(--sodium);
+}
+
+/* ---- Segmented radio groups -------------------------------------------- */
+
+.segmented {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--ink);
+}
+
+.segmented label {
+  position: relative;
+  display: flex;
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.segmented span {
+  display: flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 var(--s-3);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.segmented label + label span {
+  border-left: 1px solid var(--rule);
+}
+
+.segmented input:checked + span {
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+.segmented input:hover:not(:checked) + span {
+  background: rgb(18 23 58 / 0.08);
+}
+
+.segmented input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---- Legend ------------------------------------------------------------ */
+
+.survey__legend {
+  top: var(--s-6);
+  left: var(--gutter);
+  width: 17rem;
+  padding: var(--s-3) var(--s-4);
+}
+
+.survey__ramp {
+  height: 0.75rem;
+  margin-top: var(--s-2);
+  background: linear-gradient(90deg, #f4e5a4, var(--shade));
+  border: 1px solid var(--ink);
+}
+
+.survey__ramp--progress {
+  background: var(--chalk);
+}
+
+.survey__ramp--progress span {
+  display: block;
+  height: 100%;
+  background: var(--shade);
+}
+
+.survey__ramp-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--s-1);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+/* ---- Docket ------------------------------------------------------------ */
+
+.docket {
+  top: var(--s-6);
+  right: var(--gutter);
+  width: 23rem;
+  padding: var(--s-5);
+}
+
+.docket__empty p {
+  font-style: italic;
+}
+
+.docket__picks {
+  display: grid;
+  gap: var(--s-1);
+  margin-top: var(--s-4);
+}
+
+.docket__pick {
+  padding: var(--s-2) 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.docket__pick:hover {
+  color: var(--shade);
+}
+
+.docket__no {
+  color: var(--shade);
+  font-size: 1.1rem;
+}
+
+.docket__name {
+  margin-top: var(--s-1);
+  font-family: var(--display);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.docket__address {
+  margin-top: var(--s-1);
+  font-style: italic;
+}
+
+.docket__facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3) var(--s-4);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 2px solid var(--ink);
+}
+
+.docket__facts dt {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.docket__facts dd {
+  font-size: 1rem;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+}
+
+.docket__note {
+  margin-top: var(--s-4);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.docket__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+
+.docket__close {
+  border: 0;
+  background: none;
+  padding: var(--s-2) 0;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 1100px) {
+  .survey__head {
+    grid-template-columns: 1fr;
+  }
+
+  .survey__instrument {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .survey-map {
+    height: min(72svh, 40rem);
+    min-height: 24rem;
+  }
+
+  .survey__controls,
+  .docket {
+    position: static;
+    width: auto;
+    margin: var(--s-4) var(--gutter) 0;
+  }
+
+  .docket {
+    margin-bottom: var(--s-6);
+  }
+
+  .survey__legend {
+    top: var(--s-4);
+    left: var(--s-4);
+    width: min(17rem, calc(100% - 2rem));
+  }
+}
+
+@media (max-width: 560px) {
+  .segmented {
+    width: 100%;
+  }
+  .segmented label {
+    flex: 1;
+  }
+  .segmented span {
+    justify-content: center;
+    width: 100%;
+    padding: 0 var(--s-2);
+    font-size: 0.98rem;
+  }
+  .survey__play {
+    width: 100%;
+    justify-content: center;
+  }
+  .docket__facts {
+    grid-template-columns: 1fr;
+  }
+}

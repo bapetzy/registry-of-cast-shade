@@ -1,0 +1,337 @@
+@import '@fontsource-variable/big-shoulders/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
+
+/*
+ * Registry of Cast Shade — design tokens.
+ * Colour is light: sulfur is sunlit limewash, ultramarine is shade (shadows on a
+ * clear day really are blue), ink is the city at night, sodium is the
+ * streetlamp that replaces the sun. Chalk is paper: dockets, cards, forms.
+ */
+:root {
+  --sulfur: #f1de8e;
+  --sulfur-deep: #e3c75e;
+  --chalk: #f8f7f1;
+  --shade: #2b3bc0;
+  --shade-deep: #1d2a94;
+  --ink: #12173a;
+  --sodium: #ff9a2e;
+
+  --ink-soft: rgb(18 23 58 / 0.72);
+  --rule: rgb(18 23 58 / 0.18);
+
+  /* Defaults; lib/ambientSun.ts overrides them on each visible [data-sun-scope]. */
+  --sun-x: 0.6;
+  --sun-y: 0.3;
+  --sun-strength: 1;
+  --wall-x: 0.3;
+  --wall-y: 0.5;
+  --daylight: var(--sulfur);
+
+  --display: 'Big Shoulders Variable', 'Arial Narrow', sans-serif;
+  --serif: 'Source Serif 4 Variable', Georgia, serif;
+
+  /* Spacing: 4px base, doubling past 16. */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --section: clamp(4.5rem, 9vw, 7.5rem);
+
+  /* Type scale: a perfect fourth on the serif, display sizes fluid. */
+  --t-small: 0.875rem;
+  --t-body: 1.125rem;
+  --t-lede: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --t-h3: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+  --t-h2: clamp(3.5rem, 2rem + 7vw, 8.5rem);
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --focus: var(--shade);
+
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * The one shade colour for every cast shadow on the page. Declared per scope
+ * so it resolves against that scope's --sun-strength and fades at sunset.
+ */
+:root,
+[data-sun-scope] {
+  --cast: rgb(43 59 192 / calc(var(--sun-strength) * 0.6));
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--sulfur);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--t-body);
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Clip sideways overflow (shadows, the stamp's entrance) on a wrapper, not on
+ * body: body overflow propagates to the viewport, where mobile browsers widen
+ * the layout viewport anyway. clip, unlike hidden, keeps position: sticky working.
+ */
+.page {
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+dl,
+dd,
+ol,
+ul {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--shade);
+  color: var(--chalk);
+}
+
+/* Sections receive focus programmatically after menu navigation; no ring on the whole block. */
+section[tabindex='-1']:focus {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--s-3);
+  left: var(--s-3);
+  z-index: 100;
+  padding: var(--s-2) var(--s-4);
+  background: var(--ink);
+  color: var(--chalk);
+  font-family: var(--display);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---- Shared type ------------------------------------------------------ */
+
+.display {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/*
+ * Section titles stand on a ground line like the register's specimens and
+ * cast the same sheared shadow onto it, so every heading shows the hour:
+ * long and low in the morning, short at noon, raking left towards evening.
+ */
+.section-title {
+  --title-cast: var(--shade);
+  position: relative;
+  z-index: 0;
+  display: grid;
+  width: fit-content;
+  max-width: 100%;
+  padding-bottom: 0.06em;
+  border-bottom: 3px solid currentColor;
+  font-family: var(--display);
+  font-size: var(--t-h2);
+  font-weight: 800;
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+
+.section-title__text,
+.section-title__cast {
+  grid-area: 1 / 1;
+}
+
+.section-title__cast {
+  z-index: -1;
+  color: var(--title-cast);
+  opacity: calc(var(--sun-strength) * 0.6);
+  transform-origin: 0 calc(100% + 0.06em);
+  transform: matrix(1, 0, calc(-1 * var(--sun-x)), calc(-1 * var(--sun-y)), 0, 0);
+  pointer-events: none;
+  user-select: none;
+}
+
+.lede {
+  font-size: var(--t-lede);
+  line-height: 1.45;
+  max-width: 34ch;
+}
+
+.prose {
+  max-width: 62ch;
+}
+
+.prose p + p {
+  margin-top: var(--s-4);
+}
+
+.tag {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Relief: anything mounted proud of the wall casts a sun shadow ----- */
+
+.relief {
+  --z: 6;
+  box-shadow: calc(var(--wall-x) * var(--z) * 1px) calc(var(--wall-y) * var(--z) * 1px) 0 var(--cast);
+}
+
+/* ---- Buttons ---------------------------------------------------------- */
+
+.button {
+  --z: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 3rem;
+  padding: 0 var(--s-5);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: calc(var(--wall-x) * var(--z) * 1px) calc(var(--wall-y) * var(--z) * 1px) 0 var(--cast);
+  transition:
+    transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out);
+}
+
+.button:hover {
+  --z: 9;
+  transform: translate(calc(var(--wall-x) * -2px), calc(var(--wall-y) * -2px));
+}
+
+.button:active {
+  --z: 1;
+  transform: translate(calc(var(--wall-x) * 3px), calc(var(--wall-y) * 3px));
+}
+
+.button--solid {
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+/* Fingers need room: every control is at least 44 px tall on coarse pointers. */
+@media (pointer: coarse) {
+  /* :root raises specificity above the component rules that set smaller heights. */
+  :root .button,
+  :root .segmented span,
+  :root .registry__filter,
+  :root .chip span,
+  :root .nav__menu,
+  :root .specimen-dialog__close,
+  :root .docket__close,
+  :root .lease__withdraw {
+    min-height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
